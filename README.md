@@ -1,2 +1,2 @@
 # LFS
-LFS filesystem implementation
+LFS filesystem implementation in C
