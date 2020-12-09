@@ -1,0 +1,18 @@
+./mklfs -l 32 -s 1024 -b 2 -w 1000 hello1
+mkdir hello_test
+./lfs -i 10 -c 10 hello1 hello_test
+./umount hello_test
+
+
+python lfstest.py -f hello1 -m hello_test
+
+
+cd hello2
+cp ../lfs.c ./
+cp ../directory.c ./
+echo hello > test
+echo hello > test2
+echo hello > test3
+rm test
+cp ../file.c ./
+cat file.c

@@ -1,0 +1,190 @@
+1. Set up:
+	Flash:
+		./mklfs -l 32 -s 1024 -b 2 -w 1000 hello1
+	Mount: 
+		mkdir hello2
+		./lfs -i 10 -c 10 hello1 hello2 
+	Move to the change:
+		cd hello2
+	Unmount: 
+		fusermount -u hello2
+2. Directory manipulation:
+	Make single directory:
+			mkdir dir
+			ls
+			rmdir dir
+			ls
+	Make new single directory to test delete when directory is not empty (because of file):
+			mkdir dir
+			cd dir
+			echo demo please pass >> hope
+			cat hope
+			cd ../ ~ get out of dir
+			rmdir dir ~ will fail
+			rm dir/hope
+			rmdir dir ~ now pass.
+	Make high level directories:
+			mkdir dir
+			ls
+			cd dir
+			mkdir sub
+			ls
+			cd ../
+			rmdir dir ~ will fail
+			cd dir
+			rmdir sub
+			cd ../
+			rmdir dir ~ success
+********************** Restart **************************************************
+3. File manipulation:
+        ***** make directory up to 4 and manipulate file to lower levels (1 2 3 4)
+        mkdir dir 	
+        cd dir
+        mkdir sub
+        cd sub
+        mkdir sub2
+        cd sub2
+        mkdir sub3
+        cd sub3
+        cd ../ ~ back to sub2
+        echo hello >> test
+        cat test
+        rm test
+        cd ../ ~ back to sub
+        echo demo day >> demo
+        cat demo
+        ls
+        rm demo
+        cd ../ ~back to dir
+        echo OS is great >> class
+        cat class
+        echo because of John >> class
+        cat class
+        ls
+        ******************** Restart it again and start with the root and go down to dir/sub etc*******************************************
+        File Write: 
+        	echo hello John >> greet
+        	cat greet
+	File Copy: 	cp greet hw1
+			ls
+			cat greet
+			cat hw1
+			echo this is first hw >> hw1
+			cat hw1
+			cat greet
+			ls
+			cp hw1 hw2
+			ls
+			cat hw1
+			cat hw2
+			echo John is strict grader >> hw2
+			echo but John is enthusisatic prof >> hw1
+			cat hw1
+			cat hw2
+	Make new directory:
+		mkdir dir
+		do the same as above
+		but make opinion and then only do cp to hoang rm 
+	File remove:
+			rm house school
+			ls
+*******************Restart***********************************
+4. Symbolic & Hard Links:
+	From within a directory
+	Set up
+			echo Test Link >> test
+			cat test
+	Create a symbolic link:
+			ln -s test symtest
+	Create a hard link:
+			link test hardtest
+	Check if the symbolic link work:
+			cat symtest
+	Check the symbolic link file content:
+			readlink symtest ~ this will return test
+	Change content of original file
+			echo new file >> test
+			cat symtest
+			cat hardtest
+	Remove the initial file
+			rm test
+	Check if the symbolic link work: ~ this will fail.
+			cat symtest
+			readlink symtest
+	Remove the symbolic link:
+			rm symtest
+			ls
+	Check if the hard link work: ~ will return results
+			cat hardtest
+	Remove the hard link:
+			rm hardtest
+			ls	
+	Now do the same of the above but with file from outside of the directory.
+			mkdir dir
+			cd dir
+			echo outside folder >> ../test
+			cat ../test
+			ln -s ../test symdir
+			link ../test harddir
+			cat symdir
+			cat harddir
+			echo today is thursday >> ../test
+			cat symdir
+			cat harddir
+			rm ../test
+			cat symdir
+			car harddir
+			rm symdir
+			rm harddir
+	Now two levels apart: 
+			mkdir sub
+			cd sub
+			echo hoang and sunghoon >> ../../authors
+			cat ../../authors
+			ln -s ../../authors symsub
+			link ../../authors hardsub
+			cat symsub
+			cat hardsub
+			echo John likes our demo >> ../../authors
+			cat symdir
+			cat harddir
+			mv ../../authors ../../johnreviews
+			cat symdir
+			car harddir
+			cat ../../authors
+			cat ../../johnreviews
+			rm symdir hardsub
+			rm ../../johnreviews
+					
+5. chmod / chown (only work on the second level +)
+	Prepare:
+		echo hello >> test
+		ls -l
+	Change the file permission
+		chmod 771 test
+		ls -l
+		chmod 666 test
+		ls -l
+		chmod 777 test
+		ls -l
+	Change the owner id
+		chown sunghoon test
+		ls -l
+	We can also change owner with ../../test from outside the current folder to create symlink inside.
+********************** Restart ***************************************************
+6. Tail segment: for tail segment we already so that when we copy file with cp, the original file does not lost content.
+	~ Prepare:(Remember address of created file, max 4 files total for checking)
+		echo tail segment test >> test1
+	~ 	cp test1 test2
+		cat test2
+		cp test1 test3
+		cat test3
+		cp test1 test4
+		cat test4
+		cp test1 test5
+		cat test5
+		cp test1 test6
+		cat test6
+		
+	~ Check and see that test does not lost content	
+		cat test1

@@ -1,0 +1,4 @@
+killall lfs
+sleep 1 		## shkim. 10.28.2020. add sleep
+fusermount -u ./$1	## shkim. 10.27.2020. add ./ 
+exit 0
